@@ -23,7 +23,7 @@ class UserView(WeberView):
                 return response
         else:
             usernames = User.listUsers()
-            response = HttpResponse(json.dumps([{'username':i} for i in usernames]), content_type="application/json")
+            response = HttpResponse(json.dumps({'users':[{'username':i} for i in usernames]}), content_type="application/json")
             response["Access-Control-Allow-Origin"] = "*"            
             return response
 
