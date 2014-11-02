@@ -12,3 +12,7 @@ class WeberDB(object):
         criteria = {'object.'+field: value}
         attrs = self.db[collection].find_one(criteria)
         return attrs
+
+    def find_all_documents(self, collection):
+        attrs = self.db[collection].find()
+        return attrs

@@ -26,12 +26,11 @@ class Service(WeberView):
 
 class Test(WeberView):
     def get(self, *args, **kwargs):
-        def test(n):
-            for i in range(int(n)):
-                yield(str(i))
-        return StreamingHttpResponse(test(kwargs.get('n',10)))
+        print args
+        print kwargs
+        return HttpResponse(str(args))
 
 urlpatterns = patterns('',
 url(r'^service/?(?P<command>[A-Za-z]*)$',Service.as_view,name='service'),
-url(r'^service/test/?(?P<n>[0-9]*)$',Test.as_view, name='test'),
+url(r'^service/?(?P<command>[A-Za-z]*)/?(?P<n>[0-9]*)$',Test.as_view, name='test'),
 )
