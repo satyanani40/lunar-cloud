@@ -1,8 +1,11 @@
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from django.contrib import admin
+from weber import settings
 admin.autodiscover()
 
 import api.service
+import api.matchme
 import api.user
 
 # urllist = ('',
@@ -18,6 +21,6 @@ public_urls = lambda api_module: getattr(api_module, 'urlpatterns', patterns('',
 public_patterns = patterns('')
 public_patterns += public_urls(api.service)
 public_patterns += public_urls(api.user)
-
+public_patterns += public_urls(api.matchme)
 urlpatterns = public_patterns
 

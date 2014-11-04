@@ -7,6 +7,7 @@ from django.http.response import HttpResponseNotFound, HttpResponseBadRequest,\
 class WeberView(object):
     def __init__(self, request):
         self.request=request
+        self.csrf_exempt=None
 
     def get(self, *args, **kwargs):
         raise Http404
@@ -19,7 +20,7 @@ class WeberView(object):
         if request.method=='GET':
             return cls(request).get(*args, **kwargs)
         elif request.method=='POST':
-            return cls(request).get(*args, **kwargs)
+            return cls(request).post(*args, **kwargs)
         else:
             return HttpResponseBadRequest("Invalid Request")
 

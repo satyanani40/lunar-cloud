@@ -13,6 +13,14 @@ class WeberDB(object):
         attrs = self.db[collection].find_one(criteria)
         return attrs
 
+    def find_documents(self, collection, field, value):
+        criteria = {'object.'+field: value}
+        attrs = self.db[collection].find(criteria)
+        return attrs
+
     def find_all_documents(self, collection):
         attrs = self.db[collection].find()
         return attrs
+
+    def insert(self, collection, document):
+        self.db[collection].insert(document)
