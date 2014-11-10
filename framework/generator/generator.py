@@ -21,7 +21,6 @@ db=MongoClient().weber
 for user in users:
     friends=set(random.sample(uids,int(random.random()*10)))
     friends-set([user['seed']])
-
     user['friends']=list(friends)
     user['interests']=random.sample(interests,int(random.random()*20))
     db['weber_user'].insert({'_kind':'user','object':user})

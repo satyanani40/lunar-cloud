@@ -4,6 +4,8 @@ from framework import WeberView
 import json
 from django.http.response import Http404
 from weber.settings import weber_db
+from django.views.generic import TemplateView
+
 import time
 
 
@@ -33,4 +35,5 @@ class Test(WeberView):
 urlpatterns = patterns('',
 url(r'^service/?(?P<command>[A-Za-z]*)$',Service.as_view,name='service'),
 url(r'^service/?(?P<command>[A-Za-z]*)/?(?P<n>[0-9]*)$',Test.as_view, name='test'),
+url(r'^index/',TemplateView.as_view(template_name="index.html")),
 )

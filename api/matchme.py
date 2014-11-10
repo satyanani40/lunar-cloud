@@ -4,15 +4,16 @@ from framework import WeberView, matchme_algorithm
 from django.http.response import Http404, HttpResponseBadRequest
 import json
 from django.views.decorators.csrf import csrf_exempt
-from framework.matchme_algorithm import parse_sentence
+from framework.matchme_algorithm import parse_sentence,get_singular_sentence
 from domainmodel.postmodel import Post
 from domainmodel.usermodel import User
 
 
 class MatchmeView(WeberView):
     def get(self, *args, **kwargs):
-        query = kwargs['query']
-        posts = Post.getAllDocumentsByFieldValue("keywords", query)
+        query = kwargs['query'].lower()
+        singular_text = get_singular_sentence(query)
+        posts = Post.getAllDocumentsByFieldValue("keywords", singular_text)
         resultset = [{'username':i['object']['username'],
                       'posttext':i['object']['text'],
                       'thumbnail':User.getByFieldValue("username", i['object']['username'])} for i in posts]
@@ -26,12 +27,12 @@ class MatchmeView(WeberView):
             return HttpResponseBadRequest("No username")
         if not posttext:
             return HttpResponseBadRequest("No post text")
-        
-        words = parse_sentence(posttext)
+        singular_text = get_singular_sentence(posttext)
+        words = parse_sentence(singular_text)
         post_document = {
             "username":username,
             "text":posttext,
-            "keywords":list(words)+posttext.split(),
+            "keywords":list(words)+(posttext.lower()).split(),
         }
         
         post = Post()

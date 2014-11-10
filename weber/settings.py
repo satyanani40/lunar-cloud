@@ -90,3 +90,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 print STATICFILES_DIRS
+
+
+TEMPLATE_DIRS = (
+   os.path.join(os.path.dirname(__file__),'../static'),
+)
